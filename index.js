@@ -18,11 +18,17 @@ if (!process.env.OMNIROUTE_API_KEY ||
     throw new Error("Missing OmniRoute environment variables.");
 }
 
+
 const client = new OpenAI({
     baseURL: process.env.OMNIROUTE_BASE_URL,
     apiKey: process.env.OMNIROUTE_API_KEY,
-    timeout: 90000
+    timeout: 90000,
+    defaultHeaders: {
+        "cf-aig-gateway-id":
+            process.env.CLOUDFLARE_GATEWAY_ID || "spark-ai-gateway"
+    }
 });
+
 
 const MODEL = process.env.OMNIROUTE_MODEL || "auto";
 
